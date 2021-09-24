@@ -16,6 +16,10 @@ app.get('/express_backend', (req, res) => {
     res.send({ express: 'Express backend is connected to react!' }); 
 });
 
+app.get('/image_arr', (req, res) => {
+    res.send({ test: "test"})
+})
+
 // const server = app.listen(process.env.PORT || 5000, () => {
 //     console.log(`Express running → PORT ${server.address().port}`);
 // });
