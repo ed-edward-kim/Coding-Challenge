@@ -9,12 +9,16 @@ Look into how files will be handled through JS and make a diagram on some ideas.
 				can use a mapping function with fetch to grab each file individually?
 				Save them locally and then zip the folder?
 				Look for libraries that can do this for us?
+					JSZIP!!
 
 Once zip is created, how do we create a link to this? (Research more into this)
 	Figure out how File I/O works for Javascript, continue from there. (res.download(file) seems useful!)
+		Probably going to have React call a post route /download/ that will do res.download on the zipped file. React returns the link to .../download/ or something like that.
 
-
-
+	
+Edge Cases:
+	Make sure number of images is more than 0, but less than 100
+	
 
 
 _____________Things accomplished from TODO list and their dates_______________
@@ -23,6 +27,6 @@ _____________Things accomplished from TODO list and their dates_______________
 9/22 - Get React and Express linked up 
 9/23 - Make a diagram of the functionality
 9/23 - Use Dyanmic Route with Express to take data (needs to be dynamic route due to how we call our post)
-9/23 - Fixed ports not working. (Added '"proxy": "http://localhost:5000"' to package.json of React. Allows react to proxy the API req to express backend server on port 5000, along with making sure Express server and React server don't share the same port)
+9/23 - Fixed ports not working. (Added '"proxy": "http://localhost:5000"' to package.json of React. Allows react to proxy the API req to express backend server on port 5000. Also I made sure the Express server and React server don't share the same port)
 9/24 - Added this notes list to git 
 
