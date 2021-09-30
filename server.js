@@ -5,6 +5,10 @@ const bp = require('body-parser'); //body parser for dealing with req.body. Need
 const http = require('http'); //might not need
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args)); //node-fetch ESM only module, so we use this to load fetch.
 const fs = require('fs');
+const request = require('request');
+
+const archiver = require('archiver');
+
 
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
@@ -30,65 +34,31 @@ app.get('/express_backend', (req, res) => {
 });
 
 app.post('/image_arr/', (req, res) => {
-    // console.log("url: ", req.params.urls)
-    // // console.log("body: ", req.params.urls)
-    // console.log("query array", JSON.stringify(req.query.array))
-    // // res.send({ test: req.params.urls})
-    // console.log("hmm: ", req.body)
-
-    // console.log(req.body)
-
-    // var zip = new JSZip();
-    // var count = 0;
-    // var zipFileName = "test.zip";
-    // var urls = req.body;
-    // console.log("1");
-
-    // urls.forEach(url =>{ //url will hold a url from array.
-    //     var filename = "test"; //load file and add it to a zip file
-    //     console.log("2");
-    //     try{
-    //         JSZipUtils.getBinaryContent(url, (err, data) => {
-                
-    //             zip.file(filename, data, {binary:true});
-    //             count++;
-        
-    //             if (count == urls.length){
-    //                 var zipFile = zip.generateAsync({type: "blob"});
-    //                 saveAs(zipFile, zipFileName);
-    //             }    
-    //         });
-    //     } catch(err){
-    //         console.log("Error, could not download image from " + url[count])
-    //     }
-
-    // });
+    //https://i.imgur.com/zt7smR4_d.webp?maxwidth=760&fidelity=grand,https://i.imgur.com/AD3MbBi_d.webp?maxwidth=760&fidelity=grand
+    //https://i.imgur.com/zt7smR4_d.webp,https://i.imgur.com/AD3MbBi_d.webp
     
-    
-    // console.log("test:", urls);
+    var count = 0;
+    var urls_array = req.body.arr;
+    var file_name = req.body.name;
+    var archive = archiver('zip');
 
-    //https://i.imgur.com/zt7smR4_d.webp?maxwidth=760&fidelity=grand, https://i.imgur.com/AD3MbBi_d.webp?maxwidth=760&fidelity=grand
+    const output = fs.createWriteStream(__dirname + '/' + file_name +'.zip'); //write to given filename
 
-    var count = 0; //for naming the images.
-    try{
-        const urls = req.body; //set const urls equal to the array of urls sent from React
-        urls.map(file => {
-            fetch(file)
-                .then(res => {
-                    console.log("file"+count+" = ", file);
-                    res.body.pipe(fs.createWriteStream('./zip/image' + count + ".png"))
-                    count++;
-                })
-                
-        })
-    } catch(err){ //I believe that this try/catch is not working properly, as it is not going to the catch when given a link with no image... Might be erroring at urls.map
-        console.log("Error!");
-        // return err;
+    for(var pic in urls_array){ //go through urls_array and append to archive
+        archive.append(request(urls_array[pic]), {name: 'image'+ count + ".jpg"}); //appending file to archive from stream, and naming the image based on count
+        count++;
     }
+    archive.pipe(output); //pipe archive data to filename given
+    archive.finalize();
 
-    
-    res.send({express: "Test"})
+    // var return_url = "/download/" + file_name;
+    var return_url = "http://localhost:5000/download/" + file_name;
+    res.send({link_to_zip: return_url})
 })
 
+app.get('/download/:output', (req, res) => { //using dynamic endpoint to help with getting zipfile location
+    var zipfile = __dirname + "/" + req.params.output + ".zip"; //location and name of the zip to download
+    res.download(zipfile);
+})
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

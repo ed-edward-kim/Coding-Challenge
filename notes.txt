@@ -2,22 +2,9 @@ ________________TODO__________________
 Learn more about React
 Make the React frontend nicer to look at (maybe implement bootstrap?)
 
-Look into how files will be handled through JS and make a diagram on some ideas.
-	How will we turn the text into an array? (React will take values separated by commas, but then we need to turn the string into an array... Use split() to do this probably)
-               Express -> /image_arr/... (split requested values into array)
-			Once urls are in an array, how do we go about downloading all of them? 
-				can use a mapping function with fetch to grab each file individually?
-				Save them locally and then zip the folder?
-				Look for libraries that can do this for us?
-					JSZIP!!
-
-Once zip is created, how do we create a link to this? (Research more into this)
-	Figure out how File I/O works for Javascript, continue from there. (res.download(file) seems useful!)
-		Probably going to have React call a post route /download/ that will do res.download on the zipped file. React returns the link to .../download/ or something like that.
-
-	
 Edge Cases:
 	Make sure number of images is more than 0, but less than 100
+        Perhaps add some promise functions or awaits for the link, as it shows the link before the file actually downloads...
 	
 
 
@@ -29,4 +16,7 @@ _____________Things accomplished from TODO list and their dates_______________
 9/23 - Use Dyanmic Route with Express to take data (needs to be dynamic route due to how we call our post)
 9/23 - Fixed ports not working. (Added '"proxy": "http://localhost:5000"' to package.json of React. Allows react to proxy the API req to express backend server on port 5000. Also I made sure the Express server and React server don't share the same port)
 9/24 - Added this notes list to git 
+9/30 - Got file handling working! Added new route for downloading file.
+9/30 - Return url properly sent to react to display download site.
+
 
