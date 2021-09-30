@@ -2,10 +2,10 @@
 
 How to use:
 
-Run express server with:\
+Run express server with:
 ### 'node server.js'
 
-Run React app with:\
+Run React app by going into the client folder and run:
 ### 'npm start'
 
 Once react app is ran, it should automatically open up a webpage.
