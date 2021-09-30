@@ -85,25 +85,10 @@ class Textbox extends Component {
               onChange={this.handleInputChangedFilename.bind(this)}
           />
         </div>
-
-        {/* <div>
-          <h3>Filename (optional): </h3>
-          <input
-              type = "text"
-              value={this.state.nameQuery}
-              onChange={this.handleInputChangedFilename.bind(this)}
-          />
-        </div> */}
         <br></br>
         <button onClick={this.handleButtonClicked.bind(this)}>
           Submit
         </button>
-
-
-
-        {/* <p>
-          {this.state.returl}
-        </p> */}
 
         {/* Link to zip download */}
         <div>

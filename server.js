@@ -6,16 +6,12 @@ const http = require('http'); //might not need
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args)); //node-fetch ESM only module, so we use this to load fetch.
 const fs = require('fs');
 const request = require('request');
-
 const archiver = require('archiver');
-
 
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 
 console.log("Starting server!")
-
-
 
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -24,14 +20,6 @@ app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Credentials', true);
     next();
     });
-
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
-
-app.get('/express_backend', (req, res) => { 
-    res.send({ express: 'Express backend is connected to react!' }) 
-});
 
 app.post('/image_arr/', (req, res) => {
     //https://i.imgur.com/zt7smR4_d.webp?maxwidth=760&fidelity=grand,https://i.imgur.com/AD3MbBi_d.webp?maxwidth=760&fidelity=grand
