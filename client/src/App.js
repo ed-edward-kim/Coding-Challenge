@@ -68,7 +68,7 @@ class Textbox extends Component {
     return (
       <div align="center">
         <div>
-          <h1>URLs with a comma in between each url (no spaces): </h1>
+          <h1>URLs with a comma in between each url: </h1>
           <h6>For example, you can copy and paste this into the field for 2 pictures of cats: https://i.imgur.com/zt7smR4_d.webp,https://i.imgur.com/AD3MbBi_d.webp</h6>
           <textarea
               type="text"
